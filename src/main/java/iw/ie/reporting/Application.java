@@ -18,10 +18,9 @@ public class Application implements CommandLineRunner {
 	@Autowired
 	ApplicationContextProvider contextProvider;
 
-	
 	@Autowired
 	ReportingService reportingService;
-	
+
 	/**
 	 * @param args
 	 * @throws Exception
@@ -34,7 +33,9 @@ public class Application implements CommandLineRunner {
 		if (args.length > 0) {
 			Command command = contextProvider.getContext().getBean(args[0], Command.class);
 			List<File> reportFiles = command.execute();
-			reportingService.uploadReport(reportFiles,command.getClass().getSimpleName());
+			if (reportFiles != null) {
+				//reportingService.uploadReport(reportFiles, command.getClass().getSimpleName());
+			}
 		}
 	}
 }

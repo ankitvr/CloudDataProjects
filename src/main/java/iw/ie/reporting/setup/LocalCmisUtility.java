@@ -22,7 +22,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class LocalCmisUtility implements CmisUtility {
 
-	public static final String ALFRESCO_API_URL = "http://iwdc1preecma01/";
+	public static final String ALFRESCO_API_URL = "http://iwdc1uatecma01/";
 
 	public static final String USER_NAME = "admin";
 

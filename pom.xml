@@ -35,6 +35,12 @@
 			<artifactId>jackson-core-asl</artifactId>
 			<version>1.9.13</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/javax.mail/mail -->
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4</version>
+		</dependency>
 
 		<dependency>
 			<groupId>com.google.oauth-client</groupId>
@@ -101,22 +107,23 @@
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>com.oracle</groupId>
-			<artifactId>ojdbc6</artifactId>
-			<version>11.2.0</version>
-		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.alfresco.cmis.client/alfresco-opencmis-extension -->
 		<dependency>
 			<groupId>org.alfresco.cmis.client</groupId>
 			<artifactId>alfresco-opencmis-extension</artifactId>
-			<version>1.0</version>
+			<version>1.1</version>
 		</dependency>
+
 
 	</dependencies>
 
-
+	<repositories>
+		<repository>
+			<id>alfresco-public</id>
+			<url>https://artifacts.alfresco.com/nexus/content/groups/public</url>
+		</repository>
+	</repositories>
 
 
 </project>

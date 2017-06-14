@@ -1,5 +1,7 @@
 .settings
 .classpath
 .project
+.idea
+cloudContentStats*
 bin
 target

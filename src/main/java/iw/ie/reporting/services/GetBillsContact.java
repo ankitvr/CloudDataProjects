@@ -24,11 +24,11 @@ public class GetBillsContact implements Command {
 
 	private Session cmisSession;
 
-	private String[] monthDetails = { "2014-01", "2015-02", "2014-03", "2014-01", "2015-02", "2014-03", "2014-04",
-			"2015-05", "2014-06", "2014-07", "2015-08", "2014-09", "2014-10", "2015-11", "2014-12", "2015-01",
-			"2015-02", "2015-03", "2015-04", "2015-05", "2015-06", "2015-07", "2015-08", "2015-09", "2015-10",
-			"2015-11", "2015-12", "2016-01", "2016-02", "2016-03", "2016-04", "2016-05", "2016-06", "2016-07",
-			"2016-08", "2016-09" };
+	private String[] monthDetails = { "2014-01", "2014-02", "2014-03", "2014-04", "2014-05", "2014-06", "2014-07",
+			"2014-08", "2014-09", "2014-10", "2014-11", "2014-12", "2015-01", "2015-02", "2015-03", "2015-04",
+			"2015-05", "2015-06", "2015-07", "2015-08", "2015-09", "2015-10", "2015-11", "2015-12", "2016-01",
+			"2016-02", "2016-03", "2016-04", "2016-05", "2016-06", "2016-07", "2016-08", "2016-09", "2016-10",
+			"2016-11", "2016-12" };
 
 	@Override
 	public List<File> execute() throws Exception {
@@ -44,8 +44,8 @@ public class GetBillsContact implements Command {
 		ExecutorService executorService = Executors.newFixedThreadPool(24);
 		List<Callable<File>> tasks = new ArrayList<>();
 		for (int i = 0; i < monthDetails.length - 1; i++) {
-			Callable<File> task = new DocumentCallable<>(monthDetails[i], monthDetails[i + 1],
-					"", cmisSession, "bills");
+			Callable<File> task = new DocumentCallable<>(monthDetails[i], monthDetails[i + 1], "outcc:bill", cmisSession,
+					"bill");
 			tasks.add(task);
 		}
 
@@ -54,9 +54,14 @@ public class GetBillsContact implements Command {
 
 		for (Future<File> future : futures) {
 			File report = future.get();
-			reports.add(report);
+			if (report != null) {
+				reports.add(report);
+			}
 		}
 		executorService.shutdown();
+		
+		Thread.currentThread().join();
+		System.out.println("finsihed Execution");
 		return reports;
 	}
 }

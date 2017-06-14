@@ -47,9 +47,14 @@ public class GetCloudContentOwners implements Command {
 		List<File> reports = new ArrayList<>();
 
 		OperationContext context = cmisSession.getDefaultContext();
-		context.setMaxItemsPerPage(500);
+		context.setMaxItemsPerPage(SKIPCOUNTER);
 		context.setOrderBy("cmis:creationDate");
-		ItemIterable<CmisObject> results = cmisSession.queryObjects("cmis:document", null, false, context);
+		ItemIterable<CmisObject> results = cmisSession.queryObjects("cmis:document", "IN_TREE('38a67ec9-c5a5-4ed9-b7a1-8d83f47bda53') OR IN_TREE('39d28501-6416-4cb4-9fa1-8cee89a1c479')" +
+                "OR IN_TREE('659d6f49-0163-4342-8068-602472539c62')" +
+                "OR IN_TREE('f4af754d-1b58-441e-87ce-6020a3fab72a')" +
+                "OR IN_TREE('891c090c-158a-4ee0-8ab6-1c9a5110bf4b')" +
+                "OR IN_TREE('683c8b1a-23e9-4537-945f-a5361ca8ce7d')" +
+                "OR IN_TREE('2924c403-486d-4945-b1d2-ccaf932a0d5f')", false, context);
 		long totalContents = results.getTotalNumItems();
 		System.out.println("Total Number of contents are " + totalContents);
 		int totalIterations = (int) (totalContents / SKIPCOUNTER);
@@ -121,7 +126,7 @@ class CloudDocumentCallable<T> implements Callable<List<CloudData>> {
 			} catch (Exception e) {
 			}
 		} else {
-			System.out.println("Result Not a document " + result.getId());
+			System.out.println("Result Not a document " + result);
 		}
 		return data;
 	}
