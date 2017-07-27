@@ -39,7 +39,7 @@ import iw.ie.reporting.cmis.model.ContainerList;
  * this class to load files into an existing site you've created in the cloud.
  */
 @Component
-public class CloudUtility {
+public class CloudUtility implements CmisUtility {
 
 	// Change these to match your network, site, and folder in Alfresco in the
 	// Cloud
@@ -59,7 +59,7 @@ public class CloudUtility {
 
 	// Probably do not need to change any constants below this
 	public static final String ALFRESCO_API_URL = "https://api.alfresco.com/";
-	public static final String ATOMPUB_URL = ALFRESCO_API_URL + "cmis/versions/1.0/atom";
+	public static final String ATOMPUB_URL = ALFRESCO_API_URL + "cmis/versions/1.1/atom";
 	public static final String SCOPE = "public_api";
 
 	public static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
@@ -76,12 +76,7 @@ public class CloudUtility {
 	@Autowired
 	private LocalServerReceiver receiver; 
 
-	/**
-	 * Gets a CMIS Session by connecting to the Alfresco Cloud.
-	 * 
-	 * @param accessToken
-	 * @return Session
-	 */
+	@Override
 	public Session getCmisSession() throws Exception {
 		if (cmisSession == null) {
 			// default factory implementation

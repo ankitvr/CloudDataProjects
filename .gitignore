@@ -2,6 +2,7 @@
 .classpath
 .project
 .idea*
+*.log*
 cloudContentStats*
 bin
 target

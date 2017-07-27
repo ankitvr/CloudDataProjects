@@ -94,7 +94,12 @@ public class LoginCloud {
 		redirectUrl.openStream();
 	}
 
-	private String GetPageContent(String url) throws Exception {
+	@Override
+	public int hashCode() {
+		return super.hashCode();
+	}
+
+	public String GetPageContent(String url) throws Exception {
 
 		URL obj = new URL(url);
 		conn = (HttpsURLConnection) obj.openConnection();

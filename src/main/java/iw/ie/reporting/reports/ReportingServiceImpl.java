@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
+import iw.ie.reporting.setup.CloudUtility;
+import iw.ie.reporting.setup.CmisUtility;
 import org.apache.chemistry.opencmis.client.api.Document;
 import org.apache.chemistry.opencmis.client.api.Folder;
 import org.apache.chemistry.opencmis.client.api.Session;
@@ -25,13 +27,13 @@ import iw.ie.reporting.setup.LocalCmisUtility;
 public class ReportingServiceImpl implements ReportingService {
 
 	@Autowired
-	LocalCmisUtility cmisUtil;
+	CloudUtility cmisUtil;
 
 	private Session cmisSession;
 
 
 	@Override
-	public void uploadReport(List<File> reportFiles, String folderName) {
+	public void uploadReport(List<File> reportFiles, String folderName) throws Exception {
 		if (cmisSession == null) {
 			synchronized (this) {
 				if (cmisSession == null) {
@@ -49,12 +51,21 @@ public class ReportingServiceImpl implements ReportingService {
 		File targetZipFile = new File(folderName+"_report.zip");
 		
 		try {
-			Utils.zipFile(reportFiles, targetZipFile);
+			if(reportFiles.size() > 1) {
+				Utils.zipFile(reportFiles, targetZipFile);
+			}else{
+				targetZipFile = reportFiles.get(0);
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
 		uploadReportOnTarget(targetZipFile,folder);
+		for (File report:
+			 reportFiles) {
+			report.delete();
+		}
+		targetZipFile.delete();
 
 	}
 
